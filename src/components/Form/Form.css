@@ -1,0 +1,58 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 40%;
+}
+.input-option {
+  color: black;
+}
+.button-container {
+  display: flex;
+  margin-top: 20%;
+  margin-left: 10%;
+  gap: 10%;
+}
+
+.form-input {
+  width: 90%;
+  text-decoration: none;
+  outline: none;
+  background-color: transparent;
+  color: White;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 5%;
+  font-size: 24px;
+  border-radius: 25px;
+  border: 1px solid #fff;
+}
+.form-input.select {
+  width:94%;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20%;
+  margin-left: 10%;
+}
+
+.primary-btn.add {
+  background-color: rgb(60, 83, 26);
+}
+
+.primary-btn {
+  border: 1px solid #000080;
+  width: 150px;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  height: fit-content;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: ;
+  border-radius: 5px;
+  background-color: rgba(237, 233, 11, 0.913);
+}
