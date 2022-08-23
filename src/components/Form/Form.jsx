@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { registerUser } from "../services";
-import "./Form.css";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import useStyles from "./styles"
 
 const Joi = require("joi");
 
@@ -25,68 +33,52 @@ const Form = () => {
       registerUser(value);
     }
   };
+  const classes=useStyles();
 
   return (
-    <div className="form">
-      <form>
-        <div className="input-container">
-          <input
-            className="form-input"
-            value={formValues.name}
-            placeholder="Name"
-            type="text"
-            onChange={(e) =>
-              setFormValues({ ...formValues, name: e.target.value })
-            }
-          />
-          <input
-            className="form-input"
-            value={formValues.nic}
-            placeholder="NIC"
-            type="text"
-            onChange={(e) =>
-              setFormValues({ ...formValues, nic: e.target.value })
-            }
-          />
-          <select
-            className="form-input select"
-            value={formValues.gender}
-            onChange={(e) =>
-              setFormValues({ ...formValues, gender: e.target.value })
-            }
-          >
-            <option className="input-option" value="other">
-              Other
-            </option>
-            <option className="input-option" value="female">
-              Female
-            </option>
-            <option className="input-option" value="male">
-              Male
-            </option>
-          </select>
-        </div>
-
-        <div className="button-container">
-          <a
-            className="primary-btn"
-            onClick={() =>
-              setFormValues({
-                ...formValues,
-                name: "",
-                nic: "",
-                gender: "other",
-              })
-            }
-          >
-            Clear
-          </a>
-          <a className="primary-btn add" onClick={() => validateAndSubmit()}>
-            Add
-          </a>
-        </div>
-      </form>
-    </div>
+    <Box component="form" className={classes.form}>
+      <h1 className={classes.heading}>User Register Form</h1>
+      <TextField
+        className={classes.textField}
+        id="name"
+        label="Name*"
+        variant="filled"
+        value={formValues.name}
+        onChange={(e) => setFormValues({ ...formValues, name: e.target.value })}
+      />
+      <TextField
+        className={classes.textField}
+        id="nic"
+        label="NIC*"
+        variant="filled"
+        value={formValues.nic}
+        onChange={(e) => setFormValues({ ...formValues, nic: e.target.value })}
+      />
+      <FormControl fullWidth>
+        <InputLabel id="gender">Gender</InputLabel>
+        <Select
+          labelId="genderLabel"
+          id="gender"
+          value={formValues.gender}
+          label="Gender"
+          onChange={(e) =>
+            setFormValues({ ...formValues, gender: e.target.value })
+          }
+        >
+          <MenuItem value="Other">Other</MenuItem>
+          <MenuItem value="Male">Male</MenuItem>
+          <MenuItem value="Female">Female</MenuItem>
+        </Select>
+      </FormControl>
+      <Stack className={classes.stack} spacing={10} direction="row">
+        <Button className={classes.clear} variant="contained">
+          clear
+        </Button>
+        <Button className={classes.add} variant="contained">
+          Add
+        </Button>
+      </Stack>
+    </Box>
   );
 };
 
