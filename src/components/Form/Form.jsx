@@ -1,27 +1,28 @@
 import React, { useState } from "react";
+import { registerUser } from "../services";
 import "./Form.css";
 
-const Joi =require("joi");
-
+const Joi = require("joi");
 
 const Form = () => {
-
+  //const apiUrl = process.env.BASE_URL_REACT_APP;
   const [formValues, setFormValues] = useState({
     name: "",
     nic: "",
     gender: "other",
   });
-  //console.log(formValues);
-  const schema=Joi.object({
-    name:Joi.string().min(3).required(),
-    nic:Joi.string().min(10).max(12).required(),
-    gender:Joi.string().required(),
-  })
+  const schema = Joi.object({
+    name: Joi.string().alphanum("a-z").min(3).required(),
+    nic: Joi.string().min(10).max(12).required(),
+    gender: Joi.string().required(),
+  });
 
   const validateAndSubmit = () => {
-    const {error,value} = schema.validate(formValues);
-    if(error){
+    const { error, value } = schema.validate(formValues);
+    if (error) {
       alert(error.details[0].message);
+    } else {
+      registerUser(value);
     }
   };
 
