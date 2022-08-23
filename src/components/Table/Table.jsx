@@ -1,36 +1,42 @@
-import React from "react";
-import {TableBd} from "../index";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
+import React, { useState, useEffect } from "react";
+import { fetchDataFromDb } from "../services";
+import useStyles from "./styles";
+import { DataGrid } from "@mui/x-data-grid";
 
-const TableView = () => {
-  const tableRow = ["Name", "NIC", "Gender"];
+const Table = () => {
+  
+  const [items, setItems] = useState([]);
+  const classes = useStyles();
+
+  const columns = [
+    { field: "id", headerName: "ID", sortable: false, width: 230 },
+    { field: "name", headerName: "Name", sortable: false, width: 230 },
+    { field: "nic", headerName: "NIC", sortable: false, width: 230 },
+    { field: "gender", headerName: "Gender", sortable: false, width: 270 },
+  ];
+  
+  useEffect(async () => {
+    const { data } = await fetchDataFromDb();
+    const item = await data.map((item, i) => ({
+      id: i,
+      name: item.name,
+      nic: item.nic,
+      gender: item.gender,
+    }));
+    setItems(item);
+  }, []);
 
   return (
-    <Paper elevation={0}>
-
-
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-          
-            <TableRow>
-              {tableRow.map((value) => (
-                <TableCell align="left">{value}</TableCell>
-              ))}
-            </TableRow>
-
-          </TableHead>
-                <TableBd/>
-        </Table>
-      </TableContainer>
-    </Paper>
-   
+    <div style={{ height: "90vh", width: "100%" }}>
+      <DataGrid
+        className={classes.grid}
+        rows={items}
+        columns={columns}
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+      />
+    </div>
   );
 };
 
-export default TableView;
+export default Table;
